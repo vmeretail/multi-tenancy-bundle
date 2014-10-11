@@ -1,0 +1,6 @@
+services:
+    tahoe_multi_tenancy.organization_aware_subscriber:
+        class: Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\OrganizationAwareSubscriber
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_subscriber }

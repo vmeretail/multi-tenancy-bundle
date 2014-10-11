@@ -1,0 +1,20 @@
+services:
+    tahoe.multi_tenancy.invitation_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - Tahoe\Bundle\MultiTenancyBundle\Entity\Invitation
+
+    invitation_repository:
+        alias: tahoe.multi_tenancy.invitation_repository
+
+    tahoe.multi_tenancy.organization_user_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - Tahoe\Bundle\MultiTenancyBundle\Entity\OrganizationUser
+
+    organization_user_repository:
+        alias: tahoe.multi_tenancy.organization_user_repository

@@ -1,0 +1,16 @@
+Tahoe\Bundle\MultiTenancyBundle\Entity\Organization:
+    type: mappedSuperclass
+    table: th_mt_organization
+    indexes:
+        subdomain_idx:
+            columns: [subdomain]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+        subdomain:
+            type: string

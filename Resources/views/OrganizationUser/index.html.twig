@@ -1,0 +1,95 @@
+{% extends '::base.html.twig' %}
+
+{% block page_title %}
+    <h1>{{ organization.name }}'s Users</h1>
+{% endblock %}
+
+{% block current_breadcrumb %}
+    <li>
+        Users
+    </li>
+{% endblock %}
+
+{% block content -%}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="todo-sidebar">
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject font-green-sharp bold uppercase">INVITE</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        {{ form_start(invitationForm, {attr: {class: 'form-inline', role: 'form'}}) }}
+
+                        <div class="form-group">
+                        <span class="sr-only">
+                        {{ form_label(invitationForm.email) }}
+                        </span>
+                            {{ form_widget(invitationForm.email, {attr: {class: 'form-controll', placeholder: 'Enter email'}}) }}
+                        </div>
+                        <button type="submit" class="btn btn-default">Invite</button>
+                        {{ form_widget(invitationForm._token) }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <div class="todo-content">
+            {{ form_start(form) }}
+
+
+            <div class="portlet light portlet-organization-users">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject font-green-sharp bold uppercase">ACTIVE USERS</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Roles</th>
+                        <th></th>
+                        </thead>
+                        <tbody>
+                        {% for organizationUser in organizationUsers %}
+                            <tr>
+                                <th>{{ organizationUser.user.username }}</th>
+                                <td>{{ organizationUser.user.email }}</td>
+                                <td>{{ organizationUser.roles | join(',') }}</td>
+                                <td class="text-right">
+                                    <button type="submit" class="btn btn-xs" name="user_list_form[promote][{{ organizationUser.user.id }}]" value="ROLE_ADMIN">
+                                        Promote
+                                    </button>
+                                    <button type="submit" class="btn btn-xs" name="user_list_form[demote][{{ organizationUser.user.id }}]" value="ROLE_ADMIN">
+                                        Demote
+                                    </button>
+                                    <button type="submit" class="btn btn-xs" name="user_list_form[remove][{{ organizationUser.user.id }}]" value="1">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {{ form_widget(form._token) }}
+
+            </form>
+
+
+
+            <hr>
+
+
+            {% include 'TahoeMultiTenancyBundle:OrganizationUser:_invitations.html.twig' %}
+        </div>
+    </div>
+        </div>
+
+{% endblock %}

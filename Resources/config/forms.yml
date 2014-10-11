@@ -1,0 +1,5 @@
+services:
+    tahoe.multi_tenancy.form.invitation:
+        class: Tahoe\Bundle\MultiTenancyBundle\Form\InvitationType
+        tags:
+            - { name: form.type, alias: invitation_form }

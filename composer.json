@@ -1,0 +1,26 @@
+{
+    "name": "tahoelimited/multitenant",
+    "type": "symfony-bundle",
+    "description": "A multi tenancy bundle for symfony apps",
+    "keywords": ["User management", "tenant", "tenancy"],
+    "homepage": "https://github.com/tahoelimited/multitenant",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Konrad Podgorski",
+            "email": "konrad.podgorski@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5",
+        "symfony/framework-bundle": "~2.3",
+        "symfony/twig-bundle": "~2.3",
+        "symfony/form": "~2.3",
+        "symfony/security-bundle": "~2.3",
+        "doctrine/doctrine-bundle": "*",
+    },
+    "autoload": {
+        "psr-4": { "TahoeLimited\\MultiTenancyBundle\\": "" }
+    }
+}

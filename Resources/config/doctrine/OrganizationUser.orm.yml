@@ -1,0 +1,27 @@
+Tahoe\Bundle\MultiTenancyBundle\Entity\OrganizationUser:
+    type: entity
+    table: th_mt_organization_user
+    repositoryClass: Tahoe\Bundle\MultiTenancyBundle\Repository\OrganizationUserRepository
+    id:
+        organization:
+            associationKey: true
+        user:
+            associationKey: true
+    fields:
+        roles:
+            type: array
+    manyToOne:
+        organization:
+            targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface
+            inversedBy: organizationUsers
+            joinColumn:
+                name: organization
+                referencedColumnName: id
+        user:
+            targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantUserInterface
+            inversedBy: organizationUsers
+            joinColumn:
+                name: user
+                referencedColumnName: id
+            cascade: ["persist", "merge"]
+    lifecycleCallbacks: {  }

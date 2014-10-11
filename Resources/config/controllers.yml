@@ -1,0 +1,28 @@
+services:
+    invitation_crud_controller:
+        class: Tahoe\Bundle\CrudBundle\Controller\CrudController
+        calls:
+            - [ setContainer, [@service_container] ]
+            - [ setRepository, [@invitation_repository]]
+            - [ setFactory, [@invitation_factory]]
+            -
+              - setParameters
+              -
+                -
+                  entityName: Invitation
+                  bundleName: TahoeMultiTenancyBundle
+                  formType:   invitation_form
+
+    organizationuser_crud_controller:
+        class: Tahoe\Bundle\MultiTenancyBundle\Controller\OrganizationUserController
+        calls:
+            - [ setContainer, [@service_container] ]
+            - [ setRepository, [@organization_user_repository]]
+            - [ setFactory, [@organization_user_factory]]
+            -
+              - setParameters
+              -
+                -
+                  entityName: OrganizationUser
+                  bundleName: TahoeMultiTenancyBundle
+                  formType:   organizationuser_form

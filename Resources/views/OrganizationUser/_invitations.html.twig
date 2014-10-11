@@ -1,0 +1,22 @@
+<div class="portlet light portlet-users">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-green-sharp bold uppercase">PENDING INVITATIONS</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="table table-condensed table-hover">
+            <thead>
+
+            <th>Email</th>
+            </thead>
+            <tbody>
+            {% for invitation in invitations %}
+                <tr>
+                    <td>{{ invitation.email }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

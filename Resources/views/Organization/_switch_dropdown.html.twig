@@ -1,0 +1,16 @@
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle pull-left navbar-text" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        {{ organization.name }}
+        <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu">
+        {% for organizationUser in organizationUsers %}
+        <li>
+            <a href="{{ path('switch_organization', {subdomain: organizationUser.organization.subdomain}) }}">{{ organizationUser.organization.name }}</a>
+        </li>
+        {% endfor %}
+        <li>
+            <a href="{{ path('organization_new') }}">Add organization</a>
+        </li>
+    </ul>
+</li>

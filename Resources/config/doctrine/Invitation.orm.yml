@@ -1,0 +1,15 @@
+Tahoe\Bundle\MultiTenancyBundle\Entity\Invitation:
+    type: entity
+    table: th_mt_invitation
+    repositoryClass: Tahoe\Bundle\MultiTenancyBundle\Repository\InvitationRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        email:
+            type: string
+    manyToOne:
+        organization:
+            targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface

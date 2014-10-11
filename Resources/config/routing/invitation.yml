@@ -1,0 +1,41 @@
+invitation_index:
+    path: /
+    defaults: {_controller: invitation_crud_controller:indexAction}
+
+invitation_new:
+    path: /new
+    defaults: {_controller: invitation_crud_controller:newAction}
+    requirements:
+        _method: get
+
+invitation_create:
+    path: /create
+    defaults: {_controller: invitation_crud_controller:newAction }
+    requirements:
+        _method: post
+
+invitation_show:
+    path: /{id}/show
+    defaults: {_controller: invitation_crud_controller:showAction }
+    requirements:
+        id: \d+
+
+invitation_edit:
+    path: /{id}/edit
+    defaults: {_controller: invitation_crud_controller:editAction }
+    requirements:
+        method: get
+        id: \d+
+
+invitation_update:
+    path: /{id}/update
+    defaults: {_controller: invitation_crud_controller:editAction }
+    requirements:
+        _method: post
+        id: \d+
+
+invitation_delete:
+    path: /{id}/delete
+    defaults: {_controller: invitation_crud_controller:deleteAction }
+    requirements:
+        id: \d+

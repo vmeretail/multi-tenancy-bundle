@@ -1,0 +1,22 @@
+TahoeMultiTenancyBundle_invitation:
+    resource: @TahoeMultiTenancyBundle/Resources/config/routing/invitation.yml
+    prefix: /crud/invitation
+
+TahoeMultiTenancyBundle_organizationuser:
+    resource: @TahoeMultiTenancyBundle/Resources/config/routing/organizationuser.yml
+    prefix: /crud/organization-users
+
+TahoeMultiTenancyBundle_organization:
+    resource: @TahoeMultiTenancyBundle/Resources/config/routing/organization.yml
+    prefix: /
+
+pending_invitation:
+    path:  /pending/invitations
+    defaults: {_controller: 'TahoeMultiTenancyBundle:Invitation:pending'}
+
+invitation_action:
+    path: /invitation/action
+    defaults: {_controller: 'TahoeMultiTenancyBundle:Invitation:action' }
+    requirements:
+        _method: post
+        id: \d+

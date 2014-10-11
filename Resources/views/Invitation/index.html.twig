@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block page_title %}
+    Your pending invitations
+{% endblock %}
+
+{% block current_breadcrumb %}
+    <li>
+        <span>Invitations</span>
+    </li>
+{% endblock %}
+
+{% block content -%}
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="well well-sm">
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <form action="{{ path('invitation_action') }}" method="post">
+            <table class="table">
+                <tbody>
+
+                {% for invitation in invitations %}
+                    <tr>
+                        <td>{{ invitation.organization }}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm" name="invitation[accept]" value="{{ invitation.id }}">Accept</button>
+                            <button class="btn btn-danger btn-sm" name="invitation[reject]" value="{{ invitation.id }}">Reject</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

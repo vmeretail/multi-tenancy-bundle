@@ -1,0 +1,10 @@
+services:
+    tahoe.multi_tenancy.invitation_factory:
+        class: Tahoe\Bundle\MultiTenancyBundle\Factory\InvitationFactory
+    invitation_factory:
+        alias: tahoe.multi_tenancy.invitation_factory
+
+    tahoe.multi_tenancy.organization_user_factory:
+        class: Tahoe\Bundle\MultiTenancyBundle\Factory\OrganizationUserFactory
+    organization_user_factory:
+        alias: tahoe.multi_tenancy.organization_user_factory
