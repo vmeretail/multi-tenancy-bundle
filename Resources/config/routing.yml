@@ -12,7 +12,7 @@ TahoeMultiTenancyBundle_organization:
 
 start_index:
     path: /
-    defaults: {_controller: TahoeXfrifyBundle:Start:index}
+    defaults: {_controller: TahoeMultiTenancyBundle:Start:index}
 
 pending_invitation:
     path:  /pending/invitations
