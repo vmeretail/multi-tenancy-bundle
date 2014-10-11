@@ -39,6 +39,7 @@ parameters.yml
 parameters:
     tahoe_multi_tenancy.user.class: Tahoe\JobcostifyBundle\Entity\User
     tahoe_multi_tenancy.organization.class: Tahoe\JobcostifyBundle\Entity\Organization
+    domain: yourdomain.com
 ```
 
 config.yml
