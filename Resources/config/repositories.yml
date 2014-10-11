@@ -18,3 +18,17 @@ services:
 
     organization_user_repository:
         alias: tahoe.multi_tenancy.organization_user_repository
+        
+    organization_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %tahoe_multi_tenancy.organization.class%
+
+    user_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %tahoe_multi_tenancy.user.class%
