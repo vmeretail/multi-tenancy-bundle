@@ -3,6 +3,34 @@ MultiTenancyBundle
 
 ## Installation
 
+### Download MultiTenancyBundle using composer
+
+Add MultiTenancy by running the command:
+
+``` bash
+$ php composer.phar require "tahoelimited/multitenant": "dev-master"
+```
+
+Composer will install the bundle to your project's `vendor/tahoelimited` directory.
+
+### Enable the bundle
+
+Enable the bundle in the kernel:
+
+``` php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Tahoe\Bundle\MultiTenancyBundle\TahoeMultiTenancyBundle(),
+    );
+}
+```
+### Configure the bundle
+
 Add the following settings to your ```config.yml```, you must preserve existing values, don't just overwrite an entire ```doctrine```
 
 parameters.yml
@@ -29,7 +57,7 @@ doctrine:
                         enabled: true
 ```
 
-### Organization entity
+### Create your own organization entity
 
 You must create Organization entity inside your bundle that extends one provided with the bundle
 
