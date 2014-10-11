@@ -15,10 +15,12 @@
     "require": {
         "php": ">=5.5",
         "symfony/framework-bundle": "~2.3",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
         "symfony/twig-bundle": "~2.3",
         "symfony/form": "~2.3",
         "symfony/security-bundle": "~2.3",
-        "doctrine/doctrine-bundle": "*"
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "autoload": {
         "psr-4": { "Tahoe\\Bundle\\MultiTenancyBundle\\": "" }
