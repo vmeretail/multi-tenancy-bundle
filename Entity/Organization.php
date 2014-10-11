@@ -3,7 +3,9 @@
 
 namespace Tahoe\Bundle\MultiTenancyBundle\Entity;
 
-class Organization
+use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface;
+
+class Organization implements MultiTenantOrganizationInterface
 {
     /**
      * @var integer
