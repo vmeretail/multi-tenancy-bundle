@@ -21,6 +21,6 @@
         "doctrine/doctrine-bundle": "*"
     },
     "autoload": {
-        "psr-4": { "TahoeLimited\\MultiTenancyBundle\\": "" }
+        "psr-4": { "Tahoe\\Bundle\\MultiTenancyBundle\\": "" }
     }
 }
