@@ -1,0 +1,12 @@
+{% extends '::base_unauthorized.html.twig' %}
+
+{% block content -%}
+
+    <ul class="nav">
+        {% for organizationUser in organizationUsers %}
+            <li>
+                <a href="{{ path('switch_organization', {subdomain: organizationUser.organization.subdomain, path: '/dashboard'}) }}" class="">{{ organizationUser.organization.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

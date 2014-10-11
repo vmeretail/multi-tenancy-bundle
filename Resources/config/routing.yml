@@ -10,6 +10,10 @@ TahoeMultiTenancyBundle_organization:
     resource: @TahoeMultiTenancyBundle/Resources/config/routing/organization.yml
     prefix: /
 
+start_index:
+    path: /
+    defaults: {_controller: TahoeXfrifyBundle:Start:index}
+
 pending_invitation:
     path:  /pending/invitations
     defaults: {_controller: 'TahoeMultiTenancyBundle:Invitation:pending'}
