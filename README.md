@@ -95,7 +95,9 @@ Tahoe\ExampleBundle\Entity\Tenant:
 
 ```
 
-### Update your existing user entity. Note the Multi Tenancy Bundle requires FOSUSER Bundle.
+### Update your existing user entity.
+
+> Note: MultiTenancyBundle requires FOSUSERBundle.
 
 ``` php
 <?php
@@ -103,12 +105,10 @@ Tahoe\ExampleBundle\Entity\Tenant:
 namespace Tahoe\ExampleBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
-use Tahoe\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Model\TenantTrait;
+use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantUserInterface;
 
-class User extends BaseUser implements TenantAwareInterface
+class User extends BaseUser implements MultiTenantUserInterface
 {
-    use TenantTrait;
     protected $id;
 
     public function __construct()
@@ -136,10 +136,6 @@ Tahoe\ExampleBundle\Entity\User:
           type: integer
           generator:
               strategy: AUTO
-  manyToOne:
-      tenant:
-          targetEntity: Tenant
-          cascade: ["all"]
 ```
 
 

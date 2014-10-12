@@ -5,8 +5,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    tahoe.multitenant.registration_subscriber:
-        class: Tahoe\MutiTenancyBundle\EventListener\RegistrationSubscriber
+    tahoe.multi_tenancy.registration_subscriber:
+        class: Tahoe\Bundle\MutiTenancyBundle\EventListener\RegistrationSubscriber
         arguments:
             - @doctrine.orm.entity_manager
             - @organization_factory

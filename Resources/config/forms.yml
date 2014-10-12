@@ -5,7 +5,7 @@ services:
             - { name: form.type, alias: invitation_form }
 
     tahoe.multitenant.form.registration_form:
-        class: Tahoe\MultiTenantBundle\Form\Type\RegistrationFormType
+        class: Tahoe\Bundle\MultiTenantBundle\Form\Type\RegistrationFormType
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: tahoe_multitenancy_user_registration }
