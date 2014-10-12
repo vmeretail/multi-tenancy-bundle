@@ -8,7 +8,7 @@ class StartController extends Controller
 {
     public function indexAction()
     {
-        $organizationUsers = $this->container->get('tahoe.multi_tenancy.organization_user_repository')->findBy(
+        $tenantUsers = $this->container->get('tahoe.multi_tenancy.tenant_user_repository')->findBy(
             array(
                 'user' => $this->getUser()
             )
@@ -17,7 +17,7 @@ class StartController extends Controller
         return $this->render(
             'TahoeMultiTenancyBundle:Start:index.html.twig',
             array(
-                'organizationUsers' => $organizationUsers
+                'tenantUsers' => $tenantUsers
             )
         );
     }

@@ -3,13 +3,13 @@
 namespace Tahoe\Bundle\MultiTenancyBundle\Entity;
 
 use Tahoe\Bundle\MultiTenancyBundle\Model\InvitationInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Model\OrganizationAwareInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Model\OrganizationTrait;
+use Tahoe\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Model\TenantTrait;
 
-class Invitation implements OrganizationAwareInterface, InvitationInterface
+class Invitation implements TenantAwareInterface, InvitationInterface
 {
 
-    use OrganizationTrait;
+    use TenantTrait;
 
     /**
      * @var integer

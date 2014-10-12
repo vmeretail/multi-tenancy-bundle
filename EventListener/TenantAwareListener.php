@@ -8,22 +8,22 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Tahoe\Bundle\MultiTenancyBundle\Service\OrganizationResolver;
+use Tahoe\Bundle\MultiTenancyBundle\Service\TenantResolver;
 
-class OrganizationAwareListener implements EventSubscriberInterface {
+class TenantAwareListener implements EventSubscriberInterface {
     /**
      * @var EntityManager
      */
     protected $entityManager;
     /**
-     * @var OrganizationResolver
+     * @var TenantResolver
      */
-    protected $organizationResolver;
+    protected $tenantResolver;
 
-    public function __construct($entityManager, $organizationResolver)
+    public function __construct($entityManager, $tenantResolver)
     {
         $this->entityManager = $entityManager;
-        $this->organizationResolver = $organizationResolver;
+        $this->tenantResolver = $tenantResolver;
     }
 
     public function onKernelController(FilterControllerEvent $event)
@@ -32,14 +32,14 @@ class OrganizationAwareListener implements EventSubscriberInterface {
             return;
         }
 
-        if (false === $this->organizationResolver->isSubdomain()) {
+        if (false === $this->tenantResolver->isSubdomain()) {
             return;
         }
 
-        $organizationId = $this->organizationResolver->getOrganizationId();
+        $tenantId = $this->tenantResolver->getTenantId();
 
-        $this->entityManager->getFilters()->enable('organizationAware')
-            ->setParameter('organizationId', $organizationId);
+        $this->entityManager->getFilters()->enable('tenantAware')
+            ->setParameter('tenantId', $tenantId);
     }
 
     public static function getSubscribedEvents()

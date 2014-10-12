@@ -10,14 +10,14 @@ use FOS\UserBundle\Event\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Handler\OrganizationUserHandler;
-use Tahoe\Bundle\MultiTenancyBundle\Service\OrganizationAwareRouter;
+use Tahoe\Bundle\MultiTenancyBundle\Handler\TenantUserHandler;
+use Tahoe\Bundle\MultiTenancyBundle\Service\TenantAwareRouter;
 use Tahoe\XfrifyBundle\Factory\FactoryInterface;
 
 /**
  * Class RegistrationSubscriber
  *
- * Responsible for creating organization during registration, it also add just created user as an organization admin
+ * Responsible for creating tenant during registration, it also add just created user as an tenant admin
  *
  * @author Konrad Podgórski <konrad.podgorski@gmail.com>
  */
@@ -32,17 +32,17 @@ class RegistrationSubscriber implements EventSubscriberInterface
     /**
      * @var FactoryInterface
      */
-    protected $organizationFactory;
+    protected $tenantFactory;
 
     /**
-     * @var OrganizationUserHandler
+     * @var TenantUserHandler
      */
-    protected $organizationUserHandler;
+    protected $tenantUserHandler;
 
     /**
-     * @var OrganizationAwareRouter
+     * @var TenantAwareRouter
      */
-    protected $organizationAwareRouter;
+    protected $tenantAwareRouter;
 
     /**
      * @var FormInterface
@@ -54,12 +54,12 @@ class RegistrationSubscriber implements EventSubscriberInterface
      */
     protected $redirectResponse;
 
-    function __construct($entityManager, $organizationFactory, $organizationUserHandler, $organizationAwareRouter)
+    function __construct($entityManager, $tenantFactory, $tenantUserHandler, $tenantAwareRouter)
     {
         $this->entityManager = $entityManager;
-        $this->organizationFactory = $organizationFactory;
-        $this->organizationUserHandler = $organizationUserHandler;
-        $this->organizationAwareRouter = $organizationAwareRouter;
+        $this->tenantFactory = $tenantFactory;
+        $this->tenantUserHandler = $tenantUserHandler;
+        $this->tenantAwareRouter = $tenantAwareRouter;
     }
 
     /**
@@ -81,8 +81,8 @@ class RegistrationSubscriber implements EventSubscriberInterface
     {
         /**
          * Disclaimer: Subscriber does all it's magic in onRegistrationCompleted method,
-         * however in onRegistrationCompleted we don't have access form (so we can get organization name and subdomain)
-         * and http response (so we can redirect user to his new organization instance)
+         * however in onRegistrationCompleted we don't have access form (so we can get tenant name and subdomain)
+         * and http response (so we can redirect user to his new tenant instance)
          *
          * That's why we are using other event that is fired before onRegistrationCompleted and we grab references to
          * form and response objects that will be used in that next event.
@@ -100,22 +100,22 @@ class RegistrationSubscriber implements EventSubscriberInterface
     {
         $user = $event->getUser();
 
-        $organizationName = $this->_form->get('organizationName')->getData();
-        $organizationSubdomain = $this->_form->get('organizationSubdomain')->getData();
+        $tenantName = $this->_form->get('tenantName')->getData();
+        $tenantSubdomain = $this->_form->get('tenantSubdomain')->getData();
 
-        $organization = $this->organizationFactory->createNew();
-        $organization->setName($organizationName);
-        $organization->setSubdomain($organizationSubdomain);
+        $tenant = $this->tenantFactory->createNew();
+        $tenant->setName($tenantName);
+        $tenant->setSubdomain($tenantSubdomain);
 
-        $this->entityManager->persist($organization);
+        $this->entityManager->persist($tenant);
         $this->entityManager->flush();
 
-        $this->organizationUserHandler->addUserToOrganization($user, $organization, array('ROLE_ADMIN'));
+        $this->tenantUserHandler->addUserToTenant($user, $tenant, array('ROLE_ADMIN'));
         $this->entityManager->flush();
 
         // this referenced redirect response will be used
         $this->redirectResponse
-            ->setTargetUrl($this->organizationAwareRouter->generateUrl($organization, 'dashboard_index'));
+            ->setTargetUrl($this->tenantAwareRouter->generateUrl($tenant, 'dashboard_index'));
 
         unset($this->_form);
     }

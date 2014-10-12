@@ -4,12 +4,12 @@ services:
     invitation_factory:
         alias: tahoe.multi_tenancy.invitation_factory
 
-    tahoe.multi_tenancy.organization_user_factory:
+    tahoe.multi_tenancy.tenant_user_factory:
         class: Tahoe\Bundle\MultiTenancyBundle\Factory\OrganizationUserFactory
 
-    tahoe.multi_tenancy.organization.factory:
-        class: Tahoe\Bundle\MultiTenancyBundle\Factory\OrganizationFactory
-        arguments: [%tahoe_multi_tenancy.organization.class%]
+    tahoe.multi_tenancy.tenant.factory:
+        class: Tahoe\Bundle\MultiTenancyBundle\Factory\TenantFactory
+        arguments: [%tahoe_multi_tenancy.tenant.class%]
 
-    organization_user_factory:
+    tenant_user_factory:
         alias: tahoe.multi_tenancy.organization_user_factory

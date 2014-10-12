@@ -1,6 +1,6 @@
 services:
-    tahoe_multi_tenancy.organization_aware_subscriber:
-        class: Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\OrganizationAwareSubscriber
+    tahoe_multi_tenancy.tenant_aware_subscriber:
+        class: Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\TenantAwareSubscriber
         arguments: [@service_container]
         tags:
             - { name: doctrine.event_subscriber }
@@ -9,7 +9,7 @@ services:
         class: Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\RegistrationSubscriber
         arguments:
             - @doctrine.orm.entity_manager
-            - @tahoe.multi_tenancy.organization.factory
+            - @tahoe.multi_tenancy.tenant.factory
             - @tahoe.multi_tenancy.organization_user_handler
             - @tahoe.multi_tenancy.organization_aware_router
         tags:

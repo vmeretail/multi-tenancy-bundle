@@ -10,11 +10,10 @@ class RegistrationFormType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-//        $builder->add('organization', new OrganizationType());
 
         // add your custom field
-        $builder->add('organizationName', 'text', array('mapped' => false));
-        $builder->add('organizationSubdomain', 'text', array('label' => 'subdomain', 'mapped' => false));
+        $builder->add('tenantName', 'text', array('mapped' => false));
+        $builder->add('tenantSubdomain', 'text', array('label' => 'subdomain', 'mapped' => false));
 
     }
 

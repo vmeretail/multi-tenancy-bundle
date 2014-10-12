@@ -2,13 +2,13 @@
 
 namespace Tahoe\Bundle\MultiTenancyBundle\Factory;
 
-use Tahoe\Bundle\MultiTenancyBundle\Entity\Invitation;
+use Tahoe\Bundle\MultiTenancyBundle\Entity\TenantUser;
 
-class InvitationFactory
+class TenantUserFactory
 {
     public function createNew()
     {
-        $tenantUser = new Invitation();
+        $tenantUser = new TenantUser();
 
         return $tenantUser;
     }

@@ -1,6 +1,6 @@
-Tahoe\Bundle\MultiTenancyBundle\Entity\Organization:
+Tahoe\Bundle\MultiTenancyBundle\Entity\Tenant:
     type: mappedSuperclass
-    table: th_mt_organization
+    table: th_mt_tenant
     indexes:
         subdomain_idx:
             columns: [subdomain]

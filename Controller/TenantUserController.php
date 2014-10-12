@@ -8,20 +8,20 @@ use Tahoe\Bundle\MultiTenancyBundle\Form\UserListType;
 use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantUserInterface;
 
 /**
- * OrganizationUser controller.
+ * TenantUser controller.
  *
  */
-class OrganizationUserController extends CrudController
+class TenantUserController extends CrudController
 {
     /**
-     * Lists all Organization entities.
+     * Lists all Tenant entities.
      *
      */
     public function indexAction()
     {
-        $organization = $this->container->get('tahoe.multi_tenancy.organization_resolver')->getOrganization();
+        $tenant = $this->container->get('tahoe.multi_tenancy.tenant_resolver')->getTenant();
 
-        $organizationUsers = $this->repository->findByOrganization($organization->getId());
+        $tenantUsers = $this->repository->findByTenant($tenant->getId());
 
         $invitationForm = $this->createForm('invitation_form', null, array(
                 'method' => 'post',
@@ -33,10 +33,10 @@ class OrganizationUserController extends CrudController
         $form = $this->createActionForm();
 
         return $this->render(
-            'TahoeMultiTenancyBundle:OrganizationUser:index.html.twig',
+            'TahoeMultiTenancyBundle:TenantUser:index.html.twig',
             array(
-                'organization' => $organization,
-                'organizationUsers' => $organizationUsers,
+                'tenant' => $tenant,
+                'tenantUsers' => $tenantUsers,
                 'invitationForm' => $invitationForm->createView(),
                 'invitations' => $invitations,
                 'form' => $form->createView()
@@ -50,7 +50,7 @@ class OrganizationUserController extends CrudController
 
             ), array(
                 'method' => 'post',
-                'action' => $this->generateUrl('admin_organization_user_handle_action')
+                'action' => $this->generateUrl('admin_tenant_user_handle_action')
             ));
     }
 
@@ -76,10 +76,10 @@ class OrganizationUserController extends CrudController
                 $this->removeUsers($data['remove']);
             }
 
-            return $this->redirect($this->generateUrl('organizationuser_index'));
+            return $this->redirect($this->generateUrl('tenantuser_index'));
         }
 
-        throw new \Exception('Submitted invalid form on organization user index page');
+        throw new \Exception('Submitted invalid form on tenant user index page');
     }
 
     /**
@@ -87,15 +87,15 @@ class OrganizationUserController extends CrudController
      */
     protected function promoteUsers($userIdRole) {
 
-        $organizationUserHandler = $this->container->get('tahoe.multi_tenancy.organization_user_handler');
+        $tenantUserHandler = $this->container->get('tahoe.multi_tenancy.tenant_user_handler');
         $userRepository = $this->container->get('user_repository');
 
-        $organization = $this->container->get('tahoe.multi_tenancy.organization_resolver')->getOrganization();
+        $tenant = $this->container->get('tahoe.multi_tenancy.tenant_resolver')->getTenant();
 
         foreach ($userIdRole as $userId => $role) {
 
             $user = $userRepository->find($userId);
-            $organizationUserHandler->addRoleToUserInOrganization($role, $user, $organization);
+            $tenantUserHandler->addRoleToUserInTenant($role, $user, $tenant);
         }
     }
 
@@ -104,15 +104,15 @@ class OrganizationUserController extends CrudController
      */
     protected function demoteUsers($userIdRole) {
 
-        $organizationUserHandler = $this->container->get('tahoe.multi_tenancy.organization_user_handler');
+        $tenantUserHandler = $this->container->get('tahoe.multi_tenancy.tenant_user_handler');
         $userRepository = $this->container->get('user_repository');
 
-        $organization = $this->container->get('tahoe.multi_tenancy.organization_resolver')->getOrganization();
+        $tenant = $this->container->get('tahoe.multi_tenancy.tenant_resolver')->getTenant();
 
         foreach ($userIdRole as $userId => $role) {
 
             $user = $userRepository->find($userId);
-            $organizationUserHandler->removeRoleFromUserInOrganization($role, $user, $organization);
+            $tenantUserHandler->removeRoleFromUserInTenant($role, $user, $tenant);
         }
     }
 
@@ -120,15 +120,15 @@ class OrganizationUserController extends CrudController
      * @param array $userIdRole Must follow the pattern userId => ignored, array(1=> 'anything')
      */
     protected function removeUsers($userIdRole) {
-        $organizationUserHandler = $this->container->get('tahoe.multi_tenancy.organization_user_handler');
+        $tenantUserHandler = $this->container->get('tahoe.multi_tenancy.tenant_user_handler');
         $userRepository = $this->container->get('user_repository');
 
-        $organization = $this->container->get('tahoe.multi_tenancy.organization_resolver')->getOrganization();
+        $tenant = $this->container->get('tahoe.multi_tenancy.tenant_resolver')->getTenant();
 
         foreach ($userIdRole as $userId => $dummy) {
 
             $user = $userRepository->find($userId);
-            $organizationUserHandler->removeUserFromOrganization($user, $organization);
+            $tenantUserHandler->removeUserFromTenant($user, $tenant);
         }
     }
 }

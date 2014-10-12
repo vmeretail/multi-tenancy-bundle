@@ -1,9 +1,0 @@
-organizationuser_index:
-    pattern:  /users
-    defaults: { _controller: "organizationuser_crud_controller:indexAction" }
-
-admin_organization_user_handle_action:
-    path:     /users/handle-action
-    defaults: { _controller: "organizationuser_crud_controller:handleActionAction" }
-    requirements:
-        _method: post

@@ -1,16 +1,16 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle pull-left navbar-text" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-        {{ organization.name }}
+        {{ tenant.name }}
         <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
-        {% for organizationUser in organizationUsers %}
+        {% for tenantUser in tenantUsers %}
         <li>
-            <a href="{{ path('switch_organization', {subdomain: organizationUser.organization.subdomain}) }}">{{ organizationUser.organization.name }}</a>
+            <a href="{{ path('switch_tenant', {subdomain: tenantUser.tenant.subdomain}) }}">{{ tenantUser.tenant.name }}</a>
         </li>
         {% endfor %}
         <li>
-            <a href="{{ path('organization_new') }}">Add organization</a>
+            <a href="{{ path('tenant_new') }}">Add tenant</a>
         </li>
     </ul>
 </li>
