@@ -6,5 +6,10 @@ services:
 
     tahoe.multi_tenancy.organization_user_factory:
         class: Tahoe\Bundle\MultiTenancyBundle\Factory\OrganizationUserFactory
+
+    tahoe.multi_tenancy.organization.factory:
+        class: Tahoe\Bundle\MultiTenancyBundle\Factory\OrganizationFactory
+        arguments: [%tahoe_multi_tenancy.organization.class%]
+
     organization_user_factory:
         alias: tahoe.multi_tenancy.organization_user_factory
