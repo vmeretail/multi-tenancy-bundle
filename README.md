@@ -8,7 +8,7 @@ MultiTenancyBundle
 Add MultiTenancy by running the command:
 
 ``` bash
-$ php composer.phar require "tahoelimited/multitenant": "dev-master"
+$ php composer.phar require "tahoelimited/multi-tenancy-bundle": "dev-master"
 ```
 
 Composer will install the bundle to your project's `vendor/tahoelimited` directory.
@@ -38,7 +38,7 @@ parameters.yml
 ``` yml
 parameters:
     tahoe_multi_tenancy.user.class: Tahoe\JobcostifyBundle\Entity\User
-    tahoe_multi_tenancy.organization.class: Tahoe\JobcostifyBundle\Entity\Organization
+    tahoe_multi_tenancy.tenant.class: Tahoe\JobcostifyBundle\Entity\Tenant
     domain: yourdomain.com
 ```
 
@@ -49,29 +49,28 @@ doctrine:
     orm:
         resolve_target_entities:
             Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantUserInterface: %tahoe_multi_tenancy.user.class%
-            Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface: %tahoe_multi_tenancy.organization.class%
+            Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantTenantInterface: %tahoe_multi_tenancy.tenant.class%
         entity_managers:
             default:
                 filters:
-                    organizationAware:
-                        class: Tahoe\Bundle\MultiTenancyBundle\Query\Filter\SQLFilter\OrganizationAwareFilter
+                    tenantAware:
+                        class: Tahoe\Bundle\MultiTenancyBundle\Query\Filter\SQLFilter\TenantAwareFilter
                         enabled: true
 ```
 
-### Create your own organization entity
+### Create your own tenant entity
 
-You must create Organization entity inside your bundle that extends one provided with the bundle
-
+You must create Tenant entity inside your bundle that extends one provided with the bundle. For example, something like this:
 
 ``` php
 <?php
 
-namespace Tahoe\JobcostifyBundle\Entity;
+namespace Tahoe\ExampleBundle\Entity;
 
-use Tahoe\Bundle\MultiTenancyBundle\Entity\Organization as BaseOrganization;
-use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Entity\Tenant as BaseTenant;
+use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantTenantInterface;
 
-class Organization extends BaseOrganization implements MultiTenantOrganizationInterface
+class Tenant extends BaseTenant implements MultiTenantTenantInterface
 {
     // your custom properties and methods
 }
@@ -82,29 +81,78 @@ class Organization extends BaseOrganization implements MultiTenantOrganizationIn
 
 ``` yml
 
-# file is extending base organization from multi tenancy bundle
-Tahoe\JobcostifyBundle\Entity\Organization:
+# file is extending base tenant from multi tenancy bundle
+Tahoe\ExampleBundle\Entity\Tenant:
     type: entity
-    table: th_jc_organization
+    table: th_ex_tenant
     fields:
         # your custom fields
 
 ```
 
-
-### Making entity organization aware
+### Update your existing user entity. Note the Multi Tenancy Bundle requires FOSUSER Bundle.
 
 ``` php
 <?php
 
-namespace Tahoe\JobcostifyBundle\Entity;
+namespace Tahoe\ExampleBundle\Entity;
 
-use Tahoe\Bundle\MultiTenancyBundle\Model\OrganizationAwareInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Model\OrganizationTrait;
+use FOS\UserBundle\Model\User as BaseUser;
+use Tahoe\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Model\TenantTrait;
 
-class Customer implements OrganizationAwareInterface
+class User extends BaseUser implements TenantAwareInterface
 {
-    use OrganizationTrait;
+    use TenantTrait;
+    protected $id;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+```
+
+``` yml
+Tahoe\ExampleBundle\Entity\User:
+  type:  entity
+  table: th_ex_user
+  repositoryClass: Tahoe\ExampleBundle\Repository\UserRepository
+  id:
+      id:
+          type: integer
+          generator:
+              strategy: AUTO
+  manyToOne:
+      tenant:
+          targetEntity: Tenant
+          cascade: ["all"]
+```
+
+
+
+### Making other entities tenant aware
+All entities that are specific to the tenant should have the following applied. Any entities that are applicable to all tenants should be left alone.
+
+``` php
+<?php
+
+namespace Tahoe\ExampleBundle\Entity;
+
+use Tahoe\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Model\TenantTrait;
+
+class Customer implements TenantAwareInterface
+{
+    use TenantTrait;
 }
 
 
@@ -112,9 +160,9 @@ class Customer implements OrganizationAwareInterface
 
 
 ``` yml
-Tahoe\JobcostifyBundle\Entity\Customer:
+Tahoe\ExampleBundle\Entity\Customer:
     type: entity
-    table: th_jc_customer
+    table: th_ex_customer
     fields:
         id:
             type: integer
@@ -124,7 +172,7 @@ Tahoe\JobcostifyBundle\Entity\Customer:
         name:
             type: string
     manyToOne:
-        organization:
-            targetEntity: Organization
+        tenant:
+            targetEntity: Tenant
 
 ```
