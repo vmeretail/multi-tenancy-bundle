@@ -1,14 +1,22 @@
 {
-    "name": "tahoelimited/multitenant",
+    "name": "tahoelimited/multi-tenancy-bundle",
     "type": "symfony-bundle",
-    "description": "A multi tenancy bundle for symfony apps",
-    "keywords": ["User management", "tenant", "tenancy"],
-    "homepage": "https://github.com/tahoelimited/multitenant",
+    "description": "A multi tenancy bundle for symfony 2 apps",
+    "keywords": ["user", "tenant", "tenancy"],
+    "homepage": "https://github.com/tahoelimited/multi-tenancy-bundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Konrad Podgorski",
             "email": "konrad.podgorski@gmail.com"
+        },
+        {
+            "name": "Pablo Martelletti",
+            "email": "pmartelletti@gmail.com"
+        },
+        {
+            "name": "Steve Gill",
+            "email": "steve.gill@tahoelimited.com"
         }
     ],
     "minimum-stability": "dev",
