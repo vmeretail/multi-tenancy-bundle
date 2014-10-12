@@ -63,6 +63,14 @@ fos_user:
             type: tahoe_multitenancy_user_registration
 ```
 
+routing.yml
+
+``` yml
+tahoe_multi_tenancy:
+    resource: "@TahoeMultiTenancyBundle/Resources/config/routing.yml"
+    prefix:   /
+```
+
 ### Create your own tenant entity
 
 You must create Tenant entity inside your bundle that extends one provided with the bundle. For example, something like this:
