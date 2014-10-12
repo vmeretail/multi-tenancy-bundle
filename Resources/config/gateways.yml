@@ -1,0 +1,7 @@
+services:
+    tahoe.multi_tenancy.gateway.recurly:
+        class: Tahoe\Bundle\MultiTenancyBundle\Gateway\RecurlyManager
+        arguments:
+          - %tahoe_multi_tenancy.recurly.subdomain%
+          - %tahoe_multi_tenancy.recurly.private_key%
+          - %tahoe_multi_tenancy.account_prefix%

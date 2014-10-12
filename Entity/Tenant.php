@@ -3,6 +3,7 @@
 
 namespace Tahoe\Bundle\MultiTenancyBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantTenantInterface;
 
 class Tenant implements MultiTenantTenantInterface

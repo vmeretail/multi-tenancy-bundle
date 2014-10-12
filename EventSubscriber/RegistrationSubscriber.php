@@ -10,6 +10,7 @@ use FOS\UserBundle\Event\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Gateway\GatewayManagerInterface;
 use Tahoe\Bundle\MultiTenancyBundle\Handler\TenantUserHandler;
 use Tahoe\Bundle\MultiTenancyBundle\Service\TenantAwareRouter;
 use Tahoe\XfrifyBundle\Factory\FactoryInterface;
@@ -54,12 +55,16 @@ class RegistrationSubscriber implements EventSubscriberInterface
      */
     protected $redirectResponse;
 
-    function __construct($entityManager, $tenantFactory, $tenantUserHandler, $tenantAwareRouter)
+    /** @var  GatewayManagerInterface */
+    protected $gatewayManager;
+
+    function __construct($entityManager, $tenantFactory, $tenantUserHandler, $tenantAwareRouter, $gatewayManager)
     {
         $this->entityManager = $entityManager;
         $this->tenantFactory = $tenantFactory;
         $this->tenantUserHandler = $tenantUserHandler;
         $this->tenantAwareRouter = $tenantAwareRouter;
+        $this->gatewayManager = $gatewayManager;
     }
 
     /**
@@ -112,6 +117,9 @@ class RegistrationSubscriber implements EventSubscriberInterface
 
         $this->tenantUserHandler->addUserToTenant($user, $tenant, array('ROLE_ADMIN'));
         $this->entityManager->flush();
+
+        // we create a new account for gateway
+        $this->gatewayManager->createAccount($tenant);
 
         // this referenced redirect response will be used
         $this->redirectResponse

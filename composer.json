@@ -28,7 +28,8 @@
         "symfony/twig-bundle": "~2.3",
         "symfony/form": "~2.3",
         "symfony/security-bundle": "~2.3",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "recurly/recurly-client": "2.3.*"
     },
     "autoload": {
         "psr-4": { "Tahoe\\Bundle\\MultiTenancyBundle\\": "" }

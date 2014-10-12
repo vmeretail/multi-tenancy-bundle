@@ -20,9 +20,22 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('tahoe_multi_tenancy');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('account_prefix')->isRequired()->cannotBeEmpty()->end()
+                ->arrayNode('gateways')
+                    ->children()
+                        ->arrayNode('recurly')
+                            ->children()
+                                ->scalarNode('subdomain')->isRequired()->cannotBeEmpty()->end()
+                                ->scalarNode('private_key')->isRequired()->cannotBeEmpty()->end()
+                                ->arrayNode('subscriptions')->isRequired()->cannotBeEmpty()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

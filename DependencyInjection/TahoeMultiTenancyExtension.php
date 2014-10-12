@@ -4,6 +4,7 @@ namespace Tahoe\Bundle\MultiTenancyBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -22,6 +23,8 @@ class TahoeMultiTenancyExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter($this->getAlias() . ".account_prefix", $config['account_prefix']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('controllers.yml');
@@ -32,6 +35,18 @@ class TahoeMultiTenancyExtension extends Extension
         $loader->load('subscribers.yml');
         $loader->load('forms.yml');
 
+        if (array_key_exists('gateways', $config)) {
+            $loader->load('gateways.yml');
+            $this->loadGatewaysParameters($container, $config['gateways']);
+        }
+    }
 
+    private function loadGatewaysParameters(ContainerInterface $container, $gateways)
+    {
+        foreach($gateways as $gateway => $params) {
+            foreach($params as $key => $paramater) {
+                $container->setParameter(sprintf("%s.%s.%s", $this->getAlias(), $gateway, $key), $paramater);;
+            }
+        }
     }
 }

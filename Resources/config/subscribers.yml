@@ -12,5 +12,6 @@ services:
             - @tahoe.multi_tenancy.tenant.factory
             - @tahoe.multi_tenancy.tenant_user_handler
             - @tahoe.multi_tenancy.tenant_aware_router
+            - @?tahoe.multi_tenancy.gateway.recurly
         tags:
             - { name: kernel.event_subscriber }
