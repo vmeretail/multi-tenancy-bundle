@@ -10,7 +10,7 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @tahoe.multi_tenancy.tenant.factory
-            - @tahoe.multi_tenancy.organization_user_handler
-            - @tahoe.multi_tenancy.organization_aware_router
+            - @tahoe.multi_tenancy.tenant_user_handler
+            - @tahoe.multi_tenancy.tenant_aware_router
         tags:
             - { name: kernel.event_subscriber }

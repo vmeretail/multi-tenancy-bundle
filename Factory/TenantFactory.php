@@ -3,7 +3,7 @@
 namespace Tahoe\Bundle\MultiTenancyBundle\Factory;
 
 
-class OrganizationFactory
+class TenantFactory
 {
     private $class;
 
