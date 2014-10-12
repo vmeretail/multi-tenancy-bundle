@@ -8,5 +8,5 @@ interface GatewayManagerInterface
 {
     public function createAccount(Tenant $tenant);
 
-    public function createSubscription(Tenant $tenant);
+    public function createSubscription(Tenant $tenant, array $data);
 }

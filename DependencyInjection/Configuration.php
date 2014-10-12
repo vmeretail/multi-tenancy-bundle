@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('subdomain')->isRequired()->cannotBeEmpty()->end()
                                 ->scalarNode('private_key')->isRequired()->cannotBeEmpty()->end()
-                                ->arrayNode('subscriptions')->isRequired()->cannotBeEmpty()->end()
+                                ->scalarNode('plan_name')->isRequired()->cannotBeEmpty()->end()
                             ->end()
                         ->end()
                     ->end()

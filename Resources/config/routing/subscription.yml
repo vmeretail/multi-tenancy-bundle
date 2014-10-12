@@ -1,0 +1,3 @@
+tahoe_multitenancy_subscription:
+    path: /subscription
+    defaults: { _controller: TahoeMultiTenancyBundle:Subscription:index }

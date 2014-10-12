@@ -10,6 +10,10 @@ TahoeMultiTenancyBundle_tenant:
     resource: @TahoeMultiTenancyBundle/Resources/config/routing/tenant.yml
     prefix: /
 
+TahoeMultiTenancyBundle_subscription:
+    resource: @TahoeMultiTenancyBundle/Resources/config/routing/subscription.yml
+    prefix: /
+
 start_index:
     path: /
     defaults: {_controller: TahoeMultiTenancyBundle:Start:index}

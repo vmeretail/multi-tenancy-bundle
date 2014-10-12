@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+{% from 'TahoeXfrifyBundle:Widgets:form_actions.html.twig' import create %}
+
+{% block current_breadcrumb %}
+    <li>
+        <span>Subscriptions</span>
+    </li>
+{% endblock %}
+
+{% block page_title %}
+    <h1>Subscription</h1>
+{% endblock page_title %}
+
+{% block content -%}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <div class="portlet-body">
+                    <form action="{{ path('tahoe_multitenancy_subscription') }}" method="post" class="form-horizontal">
+                        {{ form_rest(form) }}
+                        {{ create() }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -5,3 +5,4 @@ services:
           - %tahoe_multi_tenancy.recurly.subdomain%
           - %tahoe_multi_tenancy.recurly.private_key%
           - %tahoe_multi_tenancy.account_prefix%
+          - %tahoe_multi_tenancy.recurly.plan_name%
