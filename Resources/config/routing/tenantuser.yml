@@ -1,0 +1,9 @@
+tenantuser_index:
+    pattern:  /users
+    defaults: { _controller: "tenantuser_crud_controller:indexAction" }
+
+admin_tenant_user_handle_action:
+    path:     /users/handle-action
+    defaults: { _controller: "tenantuser_crud_controller:handleActionAction" }
+    requirements:
+        _method: post

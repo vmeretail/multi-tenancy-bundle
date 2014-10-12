@@ -11,5 +11,5 @@ Tahoe\Bundle\MultiTenancyBundle\Entity\Invitation:
         email:
             type: string
     manyToOne:
-        organization:
-            targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface
+        tenant:
+            targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantTenantInterface

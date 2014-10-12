@@ -3,17 +3,17 @@
 namespace Tahoe\Bundle\MultiTenancyBundle\Entity;
 
 /**
- * OrganizationUser
+ * TenantUser
  */
-class OrganizationUser
+class TenantUser
 {
-    const ROLE_ORGANIZATION_MANAGER = 'ROLE_ORGANIZATION_MANAGER';
-    const ROLE_ORGANIZATION_CUSTOMER = 'ROLE_ORGANIZATION_CUSTOMER';
+    const ROLE_TENANT_MANAGER = 'ROLE_TENANT_MANAGER';
+    const ROLE_TENANT_CUSTOMER = 'ROLE_TENANT_CUSTOMER';
 
     /**
-     * @var Organization $organization
+     * @var Tenant $tenant
      */
-    protected $organization;
+    protected $tenant;
 
     /**
      * @var User $user
@@ -52,8 +52,8 @@ class OrganizationUser
 
     /**
      * Available role constants:
-     * - OrganizationUser::ROLE_ORGANIZATION_MANAGER
-     * - OrganizationUser::ROLE_ORGANIZATION_CUSTOMER
+     * - TenantUser::ROLE_TENANT_MANAGER
+     * - TenantUser::ROLE_TENANT_CUSTOMER
      *
      * @param string $role
      * @return $this
@@ -119,22 +119,22 @@ class OrganizationUser
     }
 
     /**
-     * @param \Tahoe\Bundle\MultiTenancyBundle\Entity\Organization $organization
+     * @param \Tahoe\Bundle\MultiTenancyBundle\Entity\Tenant $tenant
      *
      * @return $this
      */
-    public function setOrganization($organization)
+    public function setTenant($tenant)
     {
-        $this->organization = $organization;
+        $this->tenant = $tenant;
 
         return $this;
     }
 
     /**
-     * @return \Tahoe\Bundle\MultiTenancyBundle\Entity\Organization
+     * @return \Tahoe\Bundle\MultiTenancyBundle\Entity\Tenant
      */
-    public function getOrganization()
+    public function getTenant()
     {
-        return $this->organization;
+        return $this->tenant;
     }
 }

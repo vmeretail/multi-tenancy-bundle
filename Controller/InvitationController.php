@@ -13,12 +13,12 @@ class InvitationController extends Controller
     {
         $filters = $this->getDoctrine()->getManager()->getFilters();
 
-        // for a moment we need to disable organization aware filter to fetch invitations from all tenants
-        $filters->disable("organizationAware");
+        // for a moment we need to disable tenant aware filter to fetch invitations from all tenants
+        $filters->disable("tenantAware");
         $invitations = $this->container->get('invitation_repository')->findBy(array(
                 'email' => $this->getUser()->getEmailCanonical()
             ));
-        $filters->enable("organizationAware");
+        $filters->enable("tenantAware");
 
         return $this->render('@TahoeMultiTenancy/Invitation/index.html.twig', array('invitations' => $invitations));
     }
@@ -32,8 +32,8 @@ class InvitationController extends Controller
 
         $filters = $this->getDoctrine()->getManager()->getFilters();
 
-        // for a moment we need to disable organization aware filter to fetch invitations from all tenants
-        $filters->disable("organizationAware");
+        // for a moment we need to disable tenant aware filter to fetch invitations from all tenants
+        $filters->disable("tenantAware");
 
         if (isset($action['accept'])) {
             $invitationId = $action['accept'];
@@ -45,7 +45,7 @@ class InvitationController extends Controller
             $invitationId = $action['reject'];
             $invitationHandler->rejectInvitationById($invitationId);
         }
-        $filters->enable("organizationAware");
+        $filters->enable("tenantAware");
 
         return $this->redirect($this->generateUrl('pending_invitation'));
 

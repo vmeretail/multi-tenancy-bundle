@@ -1,9 +1,9 @@
-Tahoe\Bundle\MultiTenancyBundle\Entity\OrganizationUser:
+Tahoe\Bundle\MultiTenancyBundle\Entity\TenantUser:
     type: entity
-    table: th_mt_organization_user
-    repositoryClass: Tahoe\Bundle\MultiTenancyBundle\Repository\OrganizationUserRepository
+    table: th_mt_tenant_user
+    repositoryClass: Tahoe\Bundle\MultiTenancyBundle\Repository\TenantUserRepository
     id:
-        organization:
+        tenant:
             associationKey: true
         user:
             associationKey: true
@@ -11,15 +11,15 @@ Tahoe\Bundle\MultiTenancyBundle\Entity\OrganizationUser:
         roles:
             type: array
     manyToOne:
-        organization:
-            targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface
-            inversedBy: organizationUsers
+        tenant:
+            targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantTenantInterface
+            inversedBy: tenantUsers
             joinColumn:
-                name: organization
+                name: tenant
                 referencedColumnName: id
         user:
             targetEntity: Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantUserInterface
-            inversedBy: organizationUsers
+            inversedBy: tenantUsers
             joinColumn:
                 name: user
                 referencedColumnName: id

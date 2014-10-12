@@ -1,5 +1,12 @@
 MultiTenancyBundle
 ==================
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/a5e560c5-e5f5-46a0-ae5b-8f463e774f01/small.png)](https://insight.sensiolabs.com/projects/a5e560c5-e5f5-46a0-ae5b-8f463e774f01)
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/?branch=master)
+
+[![Code Coverage](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/?branch=master)
+
+[![Build Status](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/build-status/master)
 
 ## Installation
 

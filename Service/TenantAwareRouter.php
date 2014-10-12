@@ -5,14 +5,14 @@ namespace Tahoe\Bundle\MultiTenancyBundle\Service;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Router;
-use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantOrganizationInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantTenantInterface;
 
 /**
- * Class OrganizationAwareRouter that cares about organizations! :-)
+ * Class TenantAwareRouter that cares about tenants! :-)
  *
  * @author Konrad Podgórski <konrad.podgorski@gmail.com>
  */
-class OrganizationAwareRouter
+class TenantAwareRouter
 {
     const ABSOLUTE_URL_FALSE = false;
     /**
@@ -36,18 +36,18 @@ class OrganizationAwareRouter
     }
 
     /**
-     * @param MultiTenantOrganizationInterface $organization
+     * @param MultiTenantTenantInterface $tenant
      * @param string                           $name
      * @param array                            $parameters
      *
      * @return string
      */
-    public function generateUrl(MultiTenantOrganizationInterface $organization, $name, $parameters = array())
+    public function generateUrl(MultiTenantTenantInterface $tenant, $name, $parameters = array())
     {
         $scheme = $this->requestStack->getCurrentRequest()->getScheme();
         $requestPort = $this->requestStack->getCurrentRequest()->getPort();
 
-        $host = $scheme . '://' . $organization->getSubdomain() . '.' . $this->domain;
+        $host = $scheme . '://' . $tenant->getSubdomain() . '.' . $this->domain;
 
         $port = '';
         if ('http' === $scheme && 80 != $requestPort) {

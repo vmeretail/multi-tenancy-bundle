@@ -7,9 +7,9 @@ namespace Tahoe\Bundle\MultiTenancyBundle\Model;
 interface InvitationInterface
 {
     /**
-     * @return MultiTenantOrganizationInterface
+     * @return MultiTenantTenantInterface
      */
-    public function getOrganization();
+    public function getTenant();
 
     /**
      * @return string

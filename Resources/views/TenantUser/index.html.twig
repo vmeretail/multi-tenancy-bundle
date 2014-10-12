@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block page_title %}
-    <h1>{{ organization.name }}'s Users</h1>
+    <h1>{{ tenant.name }}'s Users</h1>
 {% endblock %}
 
 {% block current_breadcrumb %}
@@ -40,7 +40,7 @@
             {{ form_start(form) }}
 
 
-            <div class="portlet light portlet-organization-users">
+            <div class="portlet light portlet-tenant-users">
                 <div class="portlet-title">
                     <div class="caption">
                         <span class="caption-subject font-green-sharp bold uppercase">ACTIVE USERS</span>
@@ -55,19 +55,19 @@
                         <th></th>
                         </thead>
                         <tbody>
-                        {% for organizationUser in organizationUsers %}
+                        {% for tenantUser in tenantUsers %}
                             <tr>
-                                <th>{{ organizationUser.user.username }}</th>
-                                <td>{{ organizationUser.user.email }}</td>
-                                <td>{{ organizationUser.roles | join(',') }}</td>
+                                <th>{{ tenantUser.user.username }}</th>
+                                <td>{{ tenantUser.user.email }}</td>
+                                <td>{{ tenantUser.roles | join(',') }}</td>
                                 <td class="text-right">
-                                    <button type="submit" class="btn btn-xs" name="user_list_form[promote][{{ organizationUser.user.id }}]" value="ROLE_ADMIN">
+                                    <button type="submit" class="btn btn-xs" name="user_list_form[promote][{{ tenantUser.user.id }}]" value="ROLE_ADMIN">
                                         Promote
                                     </button>
-                                    <button type="submit" class="btn btn-xs" name="user_list_form[demote][{{ organizationUser.user.id }}]" value="ROLE_ADMIN">
+                                    <button type="submit" class="btn btn-xs" name="user_list_form[demote][{{ tenantUser.user.id }}]" value="ROLE_ADMIN">
                                         Demote
                                     </button>
-                                    <button type="submit" class="btn btn-xs" name="user_list_form[remove][{{ organizationUser.user.id }}]" value="1">
+                                    <button type="submit" class="btn btn-xs" name="user_list_form[remove][{{ tenantUser.user.id }}]" value="1">
                                         Remove
                                     </button>
                                 </td>
@@ -87,7 +87,7 @@
             <hr>
 
 
-            {% include 'TahoeMultiTenancyBundle:OrganizationUser:_invitations.html.twig' %}
+            {% include 'TahoeMultiTenancyBundle:TenantUser:_invitations.html.twig' %}
         </div>
     </div>
         </div>
