@@ -4,3 +4,13 @@ services:
         arguments: [@service_container]
         tags:
             - { name: doctrine.event_subscriber }
+
+    tahoe.multitenant.registration_subscriber:
+        class: Tahoe\MutiTenancyBundle\EventListener\RegistrationSubscriber
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @organization_factory
+            - @tahoe.multi_tenancy.organization_user_handler
+            - @tahoe.multi_tenancy.organization_aware_router
+        tags:
+            - { name: kernel.event_subscriber }

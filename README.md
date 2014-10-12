@@ -56,6 +56,11 @@ doctrine:
                     tenantAware:
                         class: Tahoe\Bundle\MultiTenancyBundle\Query\Filter\SQLFilter\TenantAwareFilter
                         enabled: true
+
+fos_user:
+    registration:
+        form:
+            type: tahoe_multitenancy_user_registration
 ```
 
 ### Create your own tenant entity
