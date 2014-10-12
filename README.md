@@ -44,8 +44,8 @@ parameters.yml
 
 ``` yml
 parameters:
-    tahoe_multi_tenancy.user.class: Tahoe\JobcostifyBundle\Entity\User
-    tahoe_multi_tenancy.tenant.class: Tahoe\JobcostifyBundle\Entity\Tenant
+    tahoe_multi_tenancy.user.class: Tahoe\ExampleBundle\Entity\User
+    tahoe_multi_tenancy.tenant.class: Tahoe\ExampleBundle\Entity\Tenant
     domain: yourdomain.com
 ```
 
@@ -192,3 +192,6 @@ Tahoe\ExampleBundle\Entity\Customer:
             targetEntity: Tenant
 
 ```
+
+### Ensure / is free
+/ is used for redirecting to tenants, so you cannot have any routes setup with just /
