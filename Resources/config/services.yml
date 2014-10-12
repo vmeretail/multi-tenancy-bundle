@@ -1,22 +1,22 @@
 parameters:
 #    tahoe_multi_tenancy.example.class: Tahoe\Bundle\MultiTenancyBundle\Example
 services:
-    tahoe.multi_tenancy.organization_resolver:
-        class: Tahoe\Bundle\MultiTenancyBundle\Service\OrganizationResolver
+    tahoe.multi_tenancy.tenant_resolver:
+        class: Tahoe\Bundle\MultiTenancyBundle\Service\TenantResolver
         arguments:
             - @request_stack
             - %domain%
-            - @organization_repository
-    tahoe.multi_tenancy.organization_aware_router:
-        class: Tahoe\Bundle\MultiTenancyBundle\Service\OrganizationAwareRouter
+            - @tenant_repository
+    tahoe.multi_tenancy.tenant_aware_router:
+        class: Tahoe\Bundle\MultiTenancyBundle\Service\TenantAwareRouter
         arguments:
             - @request_stack
             - %domain%
             - @router
-    kernel.listener.organization_aware_listener:
-        class: Tahoe\Bundle\MultiTenancyBundle\EventListener\OrganizationAwareListener
+    kernel.listener.tenant_aware_listener:
+        class: Tahoe\Bundle\MultiTenancyBundle\EventListener\TenantAwareListener
         arguments:
             - @doctrine.orm.entity_manager
-            - @tahoe.multi_tenancy.organization_resolver
+            - @tahoe.multi_tenancy.tenant_resolver
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

@@ -35,28 +35,28 @@ class InvitationHandler
      */
     protected $userRepository;
     /**
-     * @var OrganizationUserHandler
+     * @var TenantUserHandler
      */
-    protected $organizationUserHandler;
+    protected $tenantUserHandler;
 
     /**
      * @param $entityManager
      * @param $invitationFactory
      * @param $invitationRepository
-     * @param $organizationUserHandler
+     * @param $tenantUserHandler
      * @param $userRepository
      */
     function __construct(
         $entityManager,
         $invitationFactory,
         $invitationRepository,
-        $organizationUserHandler,
+        $tenantUserHandler,
         $userRepository
     ) {
         $this->entityManager = $entityManager;
         $this->invitationFactory = $invitationFactory;
         $this->invitationRepository = $invitationRepository;
-        $this->organizationUserHandler = $organizationUserHandler;
+        $this->tenantUserHandler = $tenantUserHandler;
         $this->userRepository = $userRepository;
     }
 
@@ -77,21 +77,21 @@ class InvitationHandler
     /**
      * @param InvitationInterface $invitation
      *
-     * @return \Tahoe\Bundle\MultiTenancyBundle\Entity\OrganizationUser
+     * @return \Tahoe\Bundle\MultiTenancyBundle\Entity\TenantUser
      */
     public function acceptInvitation(InvitationInterface $invitation)
     {
         $user = $this->userRepository->findOneBy(array('emailCanonical' => $invitation->getEmail()));
 
-        $organization = $invitation->getOrganization();
+        $tenant = $invitation->getTenant();
 
-        $organizationUser = $this->organizationUserHandler->addUserToOrganization($user, $organization);
+        $tenantUser = $this->tenantUserHandler->addUserToTenant($user, $tenant);
 
         $this->entityManager->flush();
 
         $this->delete($invitation, true);
 
-        return $organizationUser;
+        return $tenantUser;
     }
 
     public function delete($invitation, $withFlush = false)

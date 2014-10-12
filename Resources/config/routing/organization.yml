@@ -1,3 +1,0 @@
-switch_organization:
-    path: /switch-organization/{subdomain}
-    defaults: {_controller: TahoeMultiTenancyBundle:Organization:switchOrganization}

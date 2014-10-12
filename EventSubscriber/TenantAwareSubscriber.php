@@ -10,15 +10,15 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\DependencyInjection\Container;
 
-use Tahoe\Bundle\MultiTenancyBundle\Model\OrganizationAwareInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Service\OrganizationResolver;
+use Tahoe\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Service\TenantResolver;
 
-class OrganizationAwareSubscriber implements EventSubscriber
+class TenantAwareSubscriber implements EventSubscriber
 {
     /**
-     * @var OrganizationResolver
+     * @var TenantResolver
      */
-    protected $organizationResolver;
+    protected $tenantResolver;
     /**
      * @var Container
      */
@@ -38,17 +38,17 @@ class OrganizationAwareSubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args)
     {
-        /** @var OrganizationAwareInterface $object */
+        /** @var TenantAwareInterface $object */
         $object = $args->getObject();
 
         // lazy loading to solve circular reference exception
-        if ($this->organizationResolver == null) {
-            $this->organizationResolver = $this->container->get('tahoe.multi_tenancy.organization_resolver');
+        if ($this->tenantResolver == null) {
+            $this->tenantResolver = $this->container->get('tahoe.multi_tenancy.tenant_resolver');
         }
 
-        if ($object instanceof OrganizationAwareInterface) {
-            if ($object->getOrganization() === null) {
-                $object->setOrganization($this->organizationResolver->getOrganization());
+        if ($object instanceof TenantAwareInterface) {
+            if ($object->getTenant() === null) {
+                $object->setTenant($this->tenantResolver->getTenant());
             }
         }
     }

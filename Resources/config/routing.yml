@@ -2,12 +2,12 @@ TahoeMultiTenancyBundle_invitation:
     resource: @TahoeMultiTenancyBundle/Resources/config/routing/invitation.yml
     prefix: /crud/invitation
 
-TahoeMultiTenancyBundle_organizationuser:
-    resource: @TahoeMultiTenancyBundle/Resources/config/routing/organizationuser.yml
-    prefix: /crud/organization-users
+TahoeMultiTenancyBundle_tenantuser:
+    resource: @TahoeMultiTenancyBundle/Resources/config/routing/tenantuser.yml
+    prefix: /crud/tenant-users
 
-TahoeMultiTenancyBundle_organization:
-    resource: @TahoeMultiTenancyBundle/Resources/config/routing/organization.yml
+TahoeMultiTenancyBundle_tenant:
+    resource: @TahoeMultiTenancyBundle/Resources/config/routing/tenant.yml
     prefix: /
 
 start_index:

@@ -4,11 +4,11 @@
 namespace Tahoe\Bundle\MultiTenancyBundle\Model;
 
 /**
- * Class MultiTenantOrganizationInterface
+ * Class MultiTenantTenantInterface
  *
  * @author Konrad Podgórski <konrad.podgorski@gmail.com>
  */
-interface MultiTenantOrganizationInterface
+interface MultiTenantTenantInterface
 {
     /**
      * @return string

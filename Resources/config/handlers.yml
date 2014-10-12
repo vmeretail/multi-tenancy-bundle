@@ -5,11 +5,11 @@ services:
             - @doctrine.orm.entity_manager
             - @tahoe.multi_tenancy.invitation_factory
             - @tahoe.multi_tenancy.invitation_repository
-            - @tahoe.multi_tenancy.organization_user_handler
+            - @tahoe.multi_tenancy.tenant_user_handler
             - @user_repository
-    tahoe.multi_tenancy.organization_user_handler:
-        class: Tahoe\Bundle\MultiTenancyBundle\Handler\OrganizationUserHandler
+    tahoe.multi_tenancy.tenant_user_handler:
+        class: Tahoe\Bundle\MultiTenancyBundle\Handler\TenantUserHandler
         arguments:
             - @doctrine.orm.entity_manager
-            - @tahoe.multi_tenancy.organization_user_factory
-            - @tahoe.multi_tenancy.organization_user_repository
+            - @tahoe.multi_tenancy.tenant_user_factory
+            - @tahoe.multi_tenancy.tenant_user_repository
