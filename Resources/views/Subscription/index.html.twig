@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
-{% from 'TahoeXfrifyBundle:Widgets:form_actions.html.twig' import create %}
+{% from 'TahoeXfrifyBundle:Widgets:form_actions.html.twig' import update %}
+
+{% set route = (update is defined) ? 'tahoe_multitenancy_subscription_details' : 'tahoe_multitenancy_subscription' %}
 
 {% block current_breadcrumb %}
     <li>
@@ -8,7 +10,7 @@
 {% endblock %}
 
 {% block page_title %}
-    <h1>Subscription</h1>
+    <h1>{% if update is defined %}Update {% endif %}Subscription</h1>
 {% endblock page_title %}
 
 {% block content -%}
@@ -16,12 +18,44 @@
         <div class="col-md-12">
             <div class="portlet light">
                 <div class="portlet-body">
-                    <form action="{{ path('tahoe_multitenancy_subscription') }}" method="post" class="form-horizontal">
+                    <form action="{{ path(route) }}" method="post" class="form-horizontal">
+                        {{ form_row(form.first_name) }}
+                        {{ form_row(form.last_name) }}
+                        <div class="form-group">
+                            {{ form_label(form.credit_card_number) }}
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-credit-card"></i>
+                                    </span>
+                                    {{ form_widget(form.credit_card_number) }}
+                                </div>
+                            </div>
+                        </div>
                         {{ form_rest(form) }}
-                        {{ create() }}
+                        {{ update() }}
                     </form>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/tahoemultitenancy/js/jquery.payment.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('input[name*="credit_card_number"]').payment('formatCardNumber');
+            $('input[name*="expiration"]').payment('formatCardExpiry');
+            $('input').on('payment.cardType', function(e, type){
+                var icon = $(this).closest('.input-group').find('i');
+                if (type != "unknown") {
+                    icon.attr('class', 'fa fa-cc-' + type);
+                } else {
+                    icon.attr('class', 'fa fa-credit-card');
+                }
+            })
+        });
+    </script>
 {% endblock %}

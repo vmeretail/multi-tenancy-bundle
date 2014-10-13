@@ -1,3 +1,7 @@
 tahoe_multitenancy_subscription:
     path: /subscription
     defaults: { _controller: TahoeMultiTenancyBundle:Subscription:index }
+
+tahoe_multitenancy_subscription_details:
+    path: /subscription/details
+    defaults: { _controller: TahoeMultiTenancyBundle:Subscription:details }
