@@ -8,7 +8,7 @@ TahoeMultiTenancyBundle_tenantuser:
 
 TahoeMultiTenancyBundle_tenant:
     resource: @TahoeMultiTenancyBundle/Resources/config/routing/tenant.yml
-    prefix: /
+    prefix: /tenants
 
 TahoeMultiTenancyBundle_subscription:
     resource: @TahoeMultiTenancyBundle/Resources/config/routing/subscription.yml
