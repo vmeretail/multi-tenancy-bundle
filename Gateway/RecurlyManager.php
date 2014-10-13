@@ -105,6 +105,7 @@ class RecurlyManager implements GatewayManagerInterface
         $expiration = explode(" / ", $data->expiration);
         $billing_info->month = $expiration[0];
         $billing_info->year = $expiration[1];
+        $billing_info->verification_value = $data->verification_value;
 
         return $billing_info;
     }

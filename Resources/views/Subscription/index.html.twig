@@ -48,6 +48,7 @@
         $(document).ready(function(){
             $('input[name*="credit_card_number"]').payment('formatCardNumber');
             $('input[name*="expiration"]').payment('formatCardExpiry');
+            $('input[name*="verification_value"]').payment('formatCardCVC');
             $('input').on('payment.cardType', function(e, type){
                 var icon = $(this).closest('.input-group').find('i');
                 if (type != "unknown") {

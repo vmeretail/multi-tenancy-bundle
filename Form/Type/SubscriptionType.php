@@ -40,6 +40,9 @@ class SubscriptionType extends AbstractType
                         "placeholder" => "mm / yyyy"
                     )
                 ))
+                ->add('verification_value', 'text', array(
+                    'label' => 'CVC'
+                ))
             ;
         });
 //            ->add('credit_card_number', 'text')
