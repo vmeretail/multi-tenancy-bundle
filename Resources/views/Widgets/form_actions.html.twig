@@ -1,0 +1,32 @@
+{% macro create() %}
+    <div class="form-group">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn green">Create</button>
+            <a href="{{ app.request.headers.get('referer') }}" class="btn default">Cancel</a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro update() %}
+    <div class="form-group">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn blue">Update</button>
+            <a href="{{ app.request.headers.get('referer') }}" class="btn default">Cancel</a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro delete() %}
+    <div class="form-group">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn red">Delete</button>
+            <a href="{{ app.request.headers.get('referer') }}" class="btn default">Cancel</a>
+        </div>
+    </div>
+{% endmacro %}
