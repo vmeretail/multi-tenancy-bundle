@@ -6,6 +6,7 @@ namespace Tahoe\Bundle\MultiTenancyBundle\Service;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Tahoe\Bundle\MultiTenancyBundle\Entity\Tenant;
 use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantTenantInterface;
 
 class TenantResolver
@@ -112,5 +113,16 @@ class TenantResolver
         }
 
         throw new \Exception(sprintf('Tenant with sub domain %s doesn\'t exist', $subdomain));
+    }
+
+    /** 
+     * @param Tenant $tenant 
+     * 
+     * @return $this 
+     */
+    public function overrideTenant(Tenant $tenant)
+    {
+        $this->tenant = $tenant;
+        return $this;
     }
 }
