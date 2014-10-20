@@ -68,6 +68,15 @@ fos_user:
     registration:
         form:
             type: tahoe_multitenancy_user_registration
+            
+tahoe_multi_tenancy:
+    account_prefix: YOUR_ACCOUNT_PREFIX
+    gateways:
+        # for the moment, only recurly is supported
+        recurly:
+            subdomain: your-subdomain
+            private_key: YOUR_PRIVATE_KEY
+            plan_name: YOUR_PLAN_NAME
 ```
 
 routing.yml
