@@ -204,3 +204,13 @@ Tahoe\ExampleBundle\Entity\Customer:
 
 ### Ensure / is free
 / is used for redirecting to tenants, so you cannot have any routes setup with just /
+
+### Using the bundle services
+
+You can make use the services that this bundle provide to get the tenant that is connected. 
+
+When using the command line with this bundle, you may find that the `tenantId` is not set. In order to avoid this error, you need to set the Tenant you want to work with manually, by calling the `overrideTenant` from the `TenantResolver` class.
+
+``` php
+$this->getContainer()->get('tahoe.multi_tenancy.tenant_resolver')->overrideTenant($tenant);
+```
