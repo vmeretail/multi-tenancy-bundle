@@ -90,6 +90,11 @@ class TenantResolver
      */
     protected function resolveTenant()
     {
+        // we check if tenant was setted by the override method
+        if ($this->tenant) {
+            return $this->tenant;
+        }
+        // if not, we resolve it by the subdomain
         $host = $this->requestStack->getCurrentRequest()->getHost();
 
         if ($host === $this->domain) {
