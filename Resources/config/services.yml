@@ -20,3 +20,11 @@ services:
             - @tahoe.multi_tenancy.tenant_resolver
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    tahoe.multi_tenancy.registration_manager:
+        class: Tahoe\Bundle\MultiTenancyBundle\Manager\RegistrationManager
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @tahoe.multi_tenancy.tenant.factory
+            - @tahoe.multi_tenancy.tenant_user_handler
+            - @?tahoe.multi_tenancy.gateway.recurly

@@ -23,6 +23,14 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('account_prefix')->isRequired()->cannotBeEmpty()->end()
+                ->arrayNode('registration_subscriber')
+                    ->children()
+                        ->scalarNode('class')->cannotBeEmpty()->defaultValue('Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\RegistrationSubscriber')->end()
+                        ->scalarNode('manager')->end()
+                        ->scalarNode('router')->end()
+                    ->end()
+                ->end()
+//                ->scalarNode('registration_subscriber')->cannotBeEmpty()->end()
                 ->arrayNode('gateways')
                     ->children()
                         ->arrayNode('recurly')
@@ -34,8 +42,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

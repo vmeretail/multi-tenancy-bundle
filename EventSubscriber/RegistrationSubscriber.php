@@ -2,7 +2,6 @@
 
 namespace Tahoe\Bundle\MultiTenancyBundle\EventSubscriber;
 
-use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,10 +9,8 @@ use FOS\UserBundle\Event\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Gateway\GatewayManagerInterface;
-use Tahoe\Bundle\MultiTenancyBundle\Handler\TenantUserHandler;
+use Tahoe\Bundle\MultiTenancyBundle\Manager\RegistrationManager;
 use Tahoe\Bundle\MultiTenancyBundle\Service\TenantAwareRouter;
-use Tahoe\XfrifyBundle\Factory\FactoryInterface;
 
 /**
  * Class RegistrationSubscriber
@@ -22,29 +19,8 @@ use Tahoe\XfrifyBundle\Factory\FactoryInterface;
  *
  * @author Konrad Podgórski <konrad.podgorski@gmail.com>
  */
-class RegistrationSubscriber implements EventSubscriberInterface
+class RegistrationSubscriber implements EventSubscriberInterface, RegistrationSubscriberInterface
 {
-
-    /**
-     * @var EntityManager
-     */
-    protected $entityManager;
-
-    /**
-     * @var FactoryInterface
-     */
-    protected $tenantFactory;
-
-    /**
-     * @var TenantUserHandler
-     */
-    protected $tenantUserHandler;
-
-    /**
-     * @var TenantAwareRouter
-     */
-    protected $tenantAwareRouter;
-
     /**
      * @var FormInterface
      */
@@ -55,16 +31,19 @@ class RegistrationSubscriber implements EventSubscriberInterface
      */
     protected $redirectResponse;
 
-    /** @var  GatewayManagerInterface */
-    protected $gatewayManager;
+    protected $registrationManager;
 
-    function __construct($entityManager, $tenantFactory, $tenantUserHandler, $tenantAwareRouter, $gatewayManager)
+    protected $tenantAwareRouter;
+
+    function __construct(RegistrationManager $registrationManager)
     {
-        $this->entityManager = $entityManager;
-        $this->tenantFactory = $tenantFactory;
-        $this->tenantUserHandler = $tenantUserHandler;
-        $this->tenantAwareRouter = $tenantAwareRouter;
-        $this->gatewayManager = $gatewayManager;
+        $this->registrationManager = $registrationManager;
+
+    }
+
+    public function setRouter($router)
+    {
+        $this->tenantAwareRouter = $router;
     }
 
     /**
@@ -104,22 +83,10 @@ class RegistrationSubscriber implements EventSubscriberInterface
     public function onRegistrationCompleted(FilterUserResponseEvent $event)
     {
         $user = $event->getUser();
-
         $tenantName = $this->_form->get('tenantName')->getData();
         $tenantSubdomain = $this->_form->get('tenantSubdomain')->getData();
 
-        $tenant = $this->tenantFactory->createNew();
-        $tenant->setName($tenantName);
-        $tenant->setSubdomain($tenantSubdomain);
-
-        $this->entityManager->persist($tenant);
-        $this->entityManager->flush();
-
-        $this->tenantUserHandler->addUserToTenant($user, $tenant, array('ROLE_ADMIN'));
-        $this->entityManager->flush();
-
-        // we create a new account for gateway
-        $this->gatewayManager->createAccount($tenant);
+        $tenant = $this->registrationManager->createTenant($user, $tenantName, $tenantSubdomain);
 
         // this referenced redirect response will be used
         $this->redirectResponse

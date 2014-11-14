@@ -4,14 +4,3 @@ services:
         arguments: [@service_container]
         tags:
             - { name: doctrine.event_subscriber }
-
-    tahoe.multi_tenancy.registration_subscriber:
-        class: Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\RegistrationSubscriber
-        arguments:
-            - @doctrine.orm.entity_manager
-            - @tahoe.multi_tenancy.tenant.factory
-            - @tahoe.multi_tenancy.tenant_user_handler
-            - @tahoe.multi_tenancy.tenant_aware_router
-            - @?tahoe.multi_tenancy.gateway.recurly
-        tags:
-            - { name: kernel.event_subscriber }
