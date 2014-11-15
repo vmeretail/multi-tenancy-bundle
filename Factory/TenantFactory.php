@@ -12,7 +12,6 @@ class TenantFactory
         $this->class = $class;
     }
 
-
     public function createNew()
     {
         return new $this->class;

@@ -71,6 +71,10 @@ fos_user:
             
 tahoe_multi_tenancy:
     account_prefix: YOUR_ACCOUNT_PREFIX
+    # optional, if you want to override the registration subscriber
+    registration_subscriber:
+        class: Your\Full\Domain\Class
+        manager: your.manager.service # if you need a manager in the subscriber
     gateways:
         # for the moment, only recurly is supported
         recurly:
