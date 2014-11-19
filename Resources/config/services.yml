@@ -7,6 +7,8 @@ services:
             - @request_stack
             - %domain%
             - @tenant_repository
+            - @security.token_storage
+            - %tahoe_multi_tenancy.subdomain_strategy%
     tahoe.multi_tenancy.tenant_aware_router:
         class: Tahoe\Bundle\MultiTenancyBundle\Service\TenantAwareRouter
         arguments:
