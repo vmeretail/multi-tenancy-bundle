@@ -31,8 +31,10 @@ class TahoeMultiTenancyExtension extends Extension
             $this->loadRegistrationSubscriber($container, $config['registration_subscriber']);
 
         }
+        // we set the subdomain strategy
+        $container->setParameter(sprintf("%s.subdomain_strategy", $this->getAlias()), $config['subdomain_strategy']);
+        // we load all the rest of the files
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-
         $loader->load('controllers.yml');
         $loader->load('factories.yml');
         $loader->load('repositories.yml');

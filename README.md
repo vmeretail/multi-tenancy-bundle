@@ -70,6 +70,7 @@ fos_user:
             type: tahoe_multitenancy_user_registration
             
 tahoe_multi_tenancy:
+    subdomain_strategy: tenant_aware # one of tenant_aware or fixed
     account_prefix: YOUR_ACCOUNT_PREFIX
     # optional, if you want to override the registration subscriber
     registration_subscriber:
@@ -82,6 +83,13 @@ tahoe_multi_tenancy:
             private_key: YOUR_PRIVATE_KEY
             plan_name: YOUR_PLAN_NAME
 ```
+
+If you use the `tenant_aware` subdomain strategy, your tenant's will get access to the APP through a subdomain they choose.
+If, in the contrary, you choose `fixed`, all tenant will access through the same endpoint, and tenant will be stored agains
+ the logged in user (instead of being resolved by the subdomain).
+
+*Note:* you can use your own form type along with the `registration_subscriber` to get a more powerful behaviour.
+
 
 routing.yml
 

@@ -5,12 +5,12 @@
     </a>
     <ul class="dropdown-menu">
         {% for tenantUser in tenantUsers %}
-        <li>
+        <li {% if tenant == tenantUser.tenant %}class="active" {% endif %}>
             <a href="{{ path('switch_tenant', {subdomain: tenantUser.tenant.subdomain}) }}">{{ tenantUser.tenant.name }}</a>
         </li>
         {% endfor %}
         <li>
-            <a href="{{ path('tenant_new') }}">Add tenant</a>
+            <a href="{{ path('admin_crud_tenant_new') }}">Add tenant</a>
         </li>
     </ul>
 </li>

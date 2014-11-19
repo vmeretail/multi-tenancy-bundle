@@ -4,6 +4,7 @@ namespace Tahoe\Bundle\MultiTenancyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Tahoe\Bundle\MultiTenancyBundle\Service\TenantResolver;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -20,8 +21,20 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('tahoe_multi_tenancy');
 
+        $supportedStrategies = [
+            TenantResolver::STRATEGY_TENANT_AWARE_SUBDOMAIN,
+            TenantResolver::STRATEGY_FIXED_SUBDOMAIN
+        ];
+
         $rootNode
             ->children()
+                ->scalarNode('subdomain_strategy')
+                    ->isRequired()
+                    ->validate()
+                        ->ifNotInArray($supportedStrategies)
+                        ->thenInvalid('The subdomain %s is not supported. Please provide one of ' . json_encode($supportedStrategies))
+                    ->end()
+                ->end()
                 ->scalarNode('account_prefix')->isRequired()->cannotBeEmpty()->end()
                 ->arrayNode('registration_subscriber')
                     ->children()

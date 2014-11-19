@@ -2,6 +2,7 @@
 
 
 namespace Tahoe\Bundle\MultiTenancyBundle\Model;
+use Tahoe\Bundle\MultiTenancyBundle\Entity\Tenant;
 
 /**
  * Class MultiTenantUserInterface
@@ -14,4 +15,15 @@ interface MultiTenantUserInterface
      * @return string
      */
     public function getUsername();
+
+    /**
+     * @return Tenant
+     */
+    public function getActiveTenant();
+
+    /**
+     * @param $tenant
+     * @return mixed
+     */
+    public function setActiveTenant($tenant);
 }

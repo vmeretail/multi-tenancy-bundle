@@ -32,14 +32,17 @@ class TenantAwareListener implements EventSubscriberInterface {
             return;
         }
 
-        if (false === $this->tenantResolver->isSubdomain()) {
+        if ($this->tenantResolver->getStrategy() === TenantResolver::STRATEGY_TENANT_AWARE_SUBDOMAIN &&
+            false === $this->tenantResolver->isSubdomain()) {
             return;
         }
 
         $tenantId = $this->tenantResolver->getTenantId();
 
-        $this->entityManager->getFilters()->enable('tenantAware')
-            ->setParameter('tenantId', $tenantId);
+        if ($tenantId) {
+            $this->entityManager->getFilters()->enable('tenantAware')
+                ->setParameter('tenantId', $tenantId);
+        }
     }
 
     public static function getSubscribedEvents()
