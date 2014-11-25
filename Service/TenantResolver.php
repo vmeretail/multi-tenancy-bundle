@@ -126,7 +126,7 @@ class TenantResolver
         /** @var MultiTenantUserInterface $user */
         $user = $this->token->getToken()->getUser();
         return ($this->strategy == self::STRATEGY_FIXED_SUBDOMAIN and !$user->getActiveTenant())
-            or ($this->strategy == self::STRATEGY_TENANT_AWARE_SUBDOMAIN);
+            or ($this->strategy == self::STRATEGY_TENANT_AWARE_SUBDOMAIN and !$this->isSubdomain());
     }
 
     /**
