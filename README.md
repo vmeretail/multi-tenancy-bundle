@@ -146,6 +146,8 @@ use Tahoe\Bundle\MultiTenancyBundle\Model\MultiTenantUserInterface;
 class User extends BaseUser implements MultiTenantUserInterface
 {
     protected $id;
+    
+    protected $activeTenant;
 
     public function __construct()
     {
@@ -158,6 +160,25 @@ class User extends BaseUser implements MultiTenantUserInterface
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getActiveTenant()
+    {
+        return $this->activeTenant;
+    }
+
+    /**
+     * @param mixed $activeTenant
+     *
+     * @return $this
+     */
+    public function setActiveTenant($activeTenant)
+    {
+        $this->activeTenant = $activeTenant;
+        return $this;
     }
 }
 ```
