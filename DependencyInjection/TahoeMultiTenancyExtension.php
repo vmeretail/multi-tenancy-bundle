@@ -29,7 +29,9 @@ class TahoeMultiTenancyExtension extends Extension
         // we load the registration subscriber config
         if (array_key_exists('registration_subscriber', $config)) {
             $this->loadRegistrationSubscriber($container, $config['registration_subscriber']);
-
+        } else {
+            // load default subscriber
+            $this->loadRegistrationSubscriber($container, []);
         }
         // we set the subdomain strategy
         $container->setParameter(sprintf("%s.subdomain_strategy", $this->getAlias()), $config['subdomain_strategy']);
@@ -52,10 +54,16 @@ class TahoeMultiTenancyExtension extends Extension
     private function loadRegistrationSubscriber(ContainerBuilder $container, array $config)
     {
         $definition = new Definition();
-        $definition->setClass($config['class']);
+        if (array_key_exists('class', $config)) {
+            $definition->setClass($config['class']);
+        } else {
+            $definition->setClass('Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\RegistrationSubscriber');
+        }
         $definition->addTag('kernel.event_subscriber');
         if (array_key_exists('manager', $config)) {
             $definition->addArgument(new Reference($config['manager']));
+        } else {
+            $definition->addArgument(new Reference('tahoe.multi_tenancy.registration_manager'));
         }
         if (array_key_exists('router', $config)) {
             $definition->addMethodCall('setRouter', array(new Reference($config['router'])));
