@@ -3,6 +3,7 @@
 namespace Tahoe\Bundle\MultiTenancyBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormInterface;
 use Tahoe\Bundle\MultiTenancyBundle\Entity\Tenant;
 use Tahoe\Bundle\MultiTenancyBundle\Factory\TenantFactory;
@@ -30,13 +31,27 @@ class RegistrationManager
 
     /** @var  GatewayManagerInterface */
     protected $gatewayManager;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    function __construct($entityManager, $tenantFactory, $tenantUserHandler, $gatewayManager)
+    /**
+     * @param EntityManager $entityManager
+     * @param TenantFactory $tenantFactory
+     * @param TenantUserHandler $tenantUserHandler
+     * @param LoggerInterface $logger
+     * @param GatewayManagerInterface $gatewayManager
+     */
+    public function __construct(EntityManager $entityManager, TenantFactory $tenantFactory,
+                                TenantUserHandler $tenantUserHandler, LoggerInterface $logger,
+                                GatewayManagerInterface $gatewayManager = null)
     {
         $this->entityManager = $entityManager;
         $this->tenantFactory = $tenantFactory;
         $this->tenantUserHandler = $tenantUserHandler;
         $this->gatewayManager = $gatewayManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -48,6 +63,9 @@ class RegistrationManager
      */
     public function createTenant(MultiTenantUserInterface $user, $tenantName, $tenantSubdomain)
     {
+        $this->logger->info(sprintf('Creating new tenant with name %s and subdomain %s',
+                $tenantName, $tenantSubdomain));
+
         /** @var Tenant $tenant */
         $tenant = $this->tenantFactory->createNew();
         $tenant->setName($tenantName);
@@ -60,7 +78,13 @@ class RegistrationManager
         $this->entityManager->flush();
 
         // we create a new account for gateway
-        $this->gatewayManager->createAccount($tenant);
+        if (null !== $this->gatewayManager) {
+            $this->logger->info(sprintf('Creating new account for tenant using gatewaymanager %s',
+                    get_class($this->gatewayManager)));
+            $this->gatewayManager->createAccount($tenant);
+        } else {
+            $this->logger->info('No gatewaymanager configured');
+        }
 
         return $tenant;
     }
