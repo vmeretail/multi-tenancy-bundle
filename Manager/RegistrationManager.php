@@ -46,11 +46,12 @@ class RegistrationManager
      * @return Tenant
      * @throws \Exception
      */
-    public function createTenant(MultiTenantUserInterface $user, $tenantName, $tenantSubdomain)
+    public function createTenant(MultiTenantUserInterface $user, $tenantName, $tenantSubdomain = '')
     {
         /** @var Tenant $tenant */
         $tenant = $this->tenantFactory->createNew();
         $tenant->setName($tenantName);
+        $tenantSubdomain = $tenantSubdomain ?: $this->createSubdomainFromTenant($tenantName);
         $tenant->setSubdomain($tenantSubdomain);
 
         $this->entityManager->persist($tenant);
@@ -63,5 +64,34 @@ class RegistrationManager
         $this->gatewayManager->createAccount($tenant);
 
         return $tenant;
+    }
+
+    /**
+     * @param $tenantName
+     * @return mixed|string
+     */
+    private function createSubdomainFromTenant($tenantName)
+    {
+        // replace non letter or digits by -
+        $subdomain = preg_replace('~[^\\pL\d]+~u', '-', $tenantName);
+
+        // trim
+        $subdomain = trim($subdomain, '-');
+
+        // transliterate
+        $subdomain = iconv('utf-8', 'us-ascii//TRANSLIT', $subdomain);
+
+        // lowercase
+        $subdomain = strtolower($subdomain);
+
+        // remove unwanted characters
+        $subdomain = preg_replace('~[^-\w]+~', '', $subdomain);
+
+        if (empty($subdomain))
+        {
+            return 'n-a';
+        }
+
+        return $subdomain;
     }
 }
