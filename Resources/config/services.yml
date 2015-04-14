@@ -1,5 +1,5 @@
 parameters:
-#    tahoe_multi_tenancy.example.class: Tahoe\Bundle\MultiTenancyBundle\Example
+    tahoe_multi_tenancy.registration_manager.class: Tahoe\Bundle\MultiTenancyBundle\Manager\RegistrationManager
 services:
     tahoe.multi_tenancy.tenant_resolver:
         class: Tahoe\Bundle\MultiTenancyBundle\Service\TenantResolver
@@ -24,9 +24,10 @@ services:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     tahoe.multi_tenancy.registration_manager:
-        class: Tahoe\Bundle\MultiTenancyBundle\Manager\RegistrationManager
+        class: %tahoe_multi_tenancy.registration_manager.class%
         arguments:
             - @doctrine.orm.entity_manager
             - @tahoe.multi_tenancy.tenant.factory
             - @tahoe.multi_tenancy.tenant_user_handler
+            - @logger
             - @?tahoe.multi_tenancy.gateway.recurly
