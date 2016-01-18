@@ -28,11 +28,17 @@ class TenantAwareRouter
      */
     protected $router;
 
-    function __construct($requestStack, $domain , $router)
+    protected $strategy;
+
+    protected $redirectRoute;
+
+    function __construct($requestStack, $domain , $router, $strategy, $route = '')
     {
         $this->requestStack = $requestStack;
         $this->domain = $domain;
         $this->router = $router;
+        $this->strategy = $strategy;
+        $this->redirectRoute = $route;
     }
 
     /**
@@ -42,24 +48,30 @@ class TenantAwareRouter
      *
      * @return string
      */
-    public function generateUrl(MultiTenantTenantInterface $tenant, $name, $parameters = array())
+    public function generateUrl(MultiTenantTenantInterface $tenant, $parameters = array())
     {
-        $scheme = $this->requestStack->getCurrentRequest()->getScheme();
-        $requestPort = $this->requestStack->getCurrentRequest()->getPort();
+        $url = '';
+        $name = $this->redirectRoute;
 
-        $host = $scheme . '://' . $tenant->getSubdomain() . '.' . $this->domain;
+        if ($this->strategy == TenantResolver::STRATEGY_TENANT_AWARE_SUBDOMAIN ) {
+            $scheme = $this->requestStack->getCurrentRequest()->getScheme();
+            $requestPort = $this->requestStack->getCurrentRequest()->getPort();
 
-        $port = '';
-        if ('http' === $scheme && 80 != $requestPort) {
-            $port = ':'.$requestPort;
-        } elseif ('https' === $scheme && 443 != $requestPort) {
-            $port = ':'.$requestPort;
+            $host = $scheme . '://' . $tenant->getSubdomain() . '.' . $this->domain;
+
+            $port = '';
+            if ('http' === $scheme && 80 != $requestPort) {
+                $port = ':'.$requestPort;
+            } elseif ('https' === $scheme && 443 != $requestPort) {
+                $port = ':'.$requestPort;
+            }
+
+            $url = $host . $port;
+            $url .= $this->router->generate($name, $parameters, self::ABSOLUTE_URL_FALSE);
+
+            return $url;
+        } else {
+            return $this->router->generate($name, $parameters);
         }
-
-        $url = $host . $port;
-
-        $url .= $this->router->generate($name, $parameters, self::ABSOLUTE_URL_FALSE);
-
-        return $url;
     }
 }

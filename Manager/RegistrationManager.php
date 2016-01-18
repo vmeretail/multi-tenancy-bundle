@@ -73,6 +73,8 @@ class RegistrationManager
         $tenant->setSubdomain($tenantSubdomain);
 
         $this->entityManager->persist($tenant);
+        // add as active tenant
+        $user->setActiveTenant($tenant);
         $this->entityManager->flush();
 
         $this->tenantUserHandler->addUserToTenant($user, $tenant, array('ROLE_ADMIN'));

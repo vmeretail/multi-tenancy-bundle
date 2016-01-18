@@ -14,7 +14,6 @@ class RegistrationFormType extends BaseType
         // add your custom field
         $builder->add('tenantName', 'text', array('mapped' => false));
         $builder->add('tenantSubdomain', 'text', array('label' => 'subdomain', 'mapped' => false));
-
     }
 
     public function getName()

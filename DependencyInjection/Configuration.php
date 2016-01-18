@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('class')->cannotBeEmpty()->defaultValue('Tahoe\Bundle\MultiTenancyBundle\EventSubscriber\RegistrationSubscriber')->end()
                         ->scalarNode('manager')->end()
                         ->scalarNode('router')->end()
+                        ->scalarNode('redirect_route')->end()
                     ->end()
                 ->end()
 //                ->scalarNode('registration_subscriber')->cannotBeEmpty()->end()

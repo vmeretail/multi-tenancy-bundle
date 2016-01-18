@@ -24,7 +24,7 @@ class RegistrationSubscriber implements EventSubscriberInterface, RegistrationSu
     /**
      * @var FormInterface
      */
-    private $_form;
+    protected $_form;
 
     /**
      * @var RedirectResponse
@@ -38,7 +38,6 @@ class RegistrationSubscriber implements EventSubscriberInterface, RegistrationSu
     function __construct(RegistrationManager $registrationManager)
     {
         $this->registrationManager = $registrationManager;
-
     }
 
     public function setRouter($router)
@@ -89,8 +88,7 @@ class RegistrationSubscriber implements EventSubscriberInterface, RegistrationSu
         $tenant = $this->registrationManager->createTenant($user, $tenantName, $tenantSubdomain);
 
         // this referenced redirect response will be used
-        $this->redirectResponse
-            ->setTargetUrl($this->tenantAwareRouter->generateUrl($tenant, 'dashboard_index'));
+        $this->redirectResponse->setTargetUrl($this->tenantAwareRouter->generateUrl($tenant));
 
         unset($this->_form);
     }

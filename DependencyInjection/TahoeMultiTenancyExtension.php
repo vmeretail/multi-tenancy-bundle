@@ -71,6 +71,13 @@ class TahoeMultiTenancyExtension extends Extension
             $definition->addMethodCall('setRouter', array(new Reference('tahoe.multi_tenancy.tenant_aware_router')));
         }
 
+        if (array_key_exists('redirect_route', $config)) {
+            $container->setParameter(sprintf("%s.registration_subscriber.redirect_route", $this->getAlias()), $config['redirect_route']);
+        } else {
+            // default parameter
+            $container->setParameter(sprintf("%s.registration_subscriber.redirect_route", $this->getAlias()), 'dashboard');
+        }
+
         // we add the definition to the container
         $container->setDefinition('tahoe.multi_tenancy.registration_subscriber', $definition);
     }
