@@ -1,5 +1,6 @@
 MultiTenancyBundle
 ==================
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/tahoelimited/multi-tenancy-bundle?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/a5e560c5-e5f5-46a0-ae5b-8f463e774f01/small.png)](https://insight.sensiolabs.com/projects/a5e560c5-e5f5-46a0-ae5b-8f463e774f01)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/?branch=master)
