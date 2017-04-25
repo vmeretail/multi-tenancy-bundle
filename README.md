@@ -8,6 +8,8 @@ MultiTenancyBundle
 
 [![Build Status](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tahoelimited/multi-tenancy-bundle/build-status/master)
 
+### NOTE: This project is not maintained any more, and it's not compatible with Symfony 3.
+
 ## Installation
 
 ### Download MultiTenancyBundle using composer
